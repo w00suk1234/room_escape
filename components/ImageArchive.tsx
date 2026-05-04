@@ -174,40 +174,43 @@ export function ImageArchive({ onClose }: ImageArchiveProps) {
         <div className="mt-5 space-y-8 pb-10">
           {groups.map((group) => (
             <section key={group.title} className="border border-cyanline/18 bg-slate-950/55 p-4 shadow-[0_0_44px_rgba(45,212,224,0.05)] sm:p-5">
-              <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
-                <div>
-                  <h2 className="text-lg font-black text-white">{group.title}</h2>
-                  <p className="mt-1 text-sm text-slate-400">{group.subtitle}</p>
-                </div>
-                <span className="text-[11px] font-bold uppercase tracking-[0.24em] text-cyan-300/55">
-                  {group.items.length} Records
-                </span>
+              <div className="mb-4">
+                <h2 className="text-lg font-black text-white">{group.title}</h2>
               </div>
 
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {group.items.map((item) => (
-                  <article
-                    key={`${group.title}-${item.title}`}
-                    className="group overflow-hidden border border-slate-700/60 bg-black/30 transition hover:border-cyanline/55 hover:bg-cyanline/[0.04]"
-                  >
-                    <div className="relative aspect-[16/10] overflow-hidden bg-black">
-                      <img
-                        src={item.src}
-                        alt={`${item.title} 이미지`}
-                        className="h-full w-full object-cover opacity-88 transition duration-300 group-hover:scale-[1.025] group-hover:opacity-100"
-                        loading="lazy"
-                        draggable={false}
-                      />
-                      <div className="absolute left-3 top-3 border border-cyanline/45 bg-slate-950/75 px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-cyan-100">
-                        {item.tag}
+                {group.items.map((item) => {
+                  const isCharacter = group.items === characterItems;
+
+                  return (
+                    <article
+                      key={`${group.title}-${item.title}`}
+                      className="group overflow-hidden border border-slate-700/60 bg-black/30 transition hover:border-cyanline/55 hover:bg-cyanline/[0.04]"
+                    >
+                      <div className="relative aspect-[16/10] overflow-hidden bg-black">
+                        <img
+                          src={item.src}
+                          alt={`${item.title} 이미지`}
+                          className={[
+                            "h-full w-full opacity-88 transition duration-300 group-hover:opacity-100",
+                            isCharacter
+                              ? "object-contain p-2 group-hover:scale-[1.015]"
+                              : "object-cover group-hover:scale-[1.025]",
+                          ].join(" ")}
+                          loading="lazy"
+                          draggable={false}
+                        />
+                        <div className="absolute left-3 top-3 border border-cyanline/45 bg-slate-950/75 px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-cyan-100">
+                          {item.tag}
+                        </div>
                       </div>
-                    </div>
-                    <div className="p-4">
-                      <h3 className="text-base font-black text-white">{item.title}</h3>
-                      <p className="mt-2 text-sm leading-6 text-slate-300">{item.caption}</p>
-                    </div>
-                  </article>
-                ))}
+                      <div className="p-4">
+                        <h3 className="text-base font-black text-white">{item.title}</h3>
+                        <p className="mt-2 text-sm leading-6 text-slate-300">{item.caption}</p>
+                      </div>
+                    </article>
+                  );
+                })}
               </div>
             </section>
           ))}
