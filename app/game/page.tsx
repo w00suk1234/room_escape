@@ -8,6 +8,7 @@ import { Chapter4Scene } from "@/components/Chapter4Scene";
 import { DialogueBox, type DialogueLine } from "@/components/DialogueBox";
 import { GameScene } from "@/components/GameScene";
 import { HudBar } from "@/components/HudBar";
+import { ImageArchive } from "@/components/ImageArchive";
 import { InventoryBar } from "@/components/InventoryBar";
 import { InvestigationModal } from "@/components/InvestigationModal";
 import { PuzzleModal } from "@/components/PuzzleModal";
@@ -95,6 +96,7 @@ export default function GamePage() {
   const audio = useAudioManager();
   const [gameState, setGameState] = useState<GameState>(() => createInitialGameState());
   const [hasSave, setHasSave] = useState(false);
+  const [showImageArchive, setShowImageArchive] = useState(false);
   const [modal, setModal] = useState<ModalState | null>(null);
   const [analysis, setAnalysis] = useState<string | null>(null);
   const [dialogueQueue, setDialogueQueue] = useState<DialogueLine[]>([]);
@@ -3844,7 +3846,26 @@ export default function GamePage() {
 
   if (gameState.currentScreen === "start") {
     return (
-<StartScreen hasSave={hasSave} onStart={startNewGame} onContinue={continueGame} onClearSave={clearSave} />
+      <>
+        <StartScreen
+          hasSave={hasSave}
+          onStart={startNewGame}
+          onContinue={continueGame}
+          onOpenArchive={() => {
+            audio.playSfx("click");
+            setShowImageArchive(true);
+          }}
+          onClearSave={clearSave}
+        />
+        {showImageArchive ? (
+          <ImageArchive
+            onClose={() => {
+              audio.playSfx("click");
+              setShowImageArchive(false);
+            }}
+          />
+        ) : null}
+      </>
     );
   }
 
@@ -4028,7 +4049,6 @@ export default function GamePage() {
     </main>
   );
 }
-
 
 
 

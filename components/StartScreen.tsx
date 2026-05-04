@@ -4,6 +4,7 @@ interface StartScreenProps {
   hasSave: boolean;
   onStart: () => void;
   onContinue: () => void;
+  onOpenArchive: () => void;
   onClearSave: () => void;
 }
 
@@ -17,7 +18,7 @@ const tags = [
   "\uB9C8\uC9C0\uB9C9 \uC120\uD0DD",
 ];
 
-export function StartScreen({ hasSave, onStart, onContinue, onClearSave }: StartScreenProps) {
+export function StartScreen({ hasSave, onStart, onContinue, onOpenArchive, onClearSave }: StartScreenProps) {
   return (
     <main className="screen-shell min-h-screen overflow-x-hidden overflow-y-auto text-slate-100">
       <section className="relative z-10 flex min-h-screen items-center justify-center px-4 py-6 fade-in sm:px-6 lg:py-10">
@@ -52,7 +53,7 @@ export function StartScreen({ hasSave, onStart, onContinue, onClearSave }: Start
               ))}
             </div>
 
-            <div className="mt-6 grid w-full gap-3 sm:grid-cols-3">
+            <div className="mt-6 grid w-full gap-3 sm:grid-cols-2 lg:grid-cols-4">
               <button
                 className="border border-cyanline/70 bg-cyanline/15 px-4 py-4 font-bold text-cyan-50 shadow-[0_0_24px_rgba(45,212,224,0.10)] transition hover:border-cyan-200 hover:bg-cyanline/25 focus:outline-none focus:ring-2 focus:ring-cyan-300/50"
                 data-testid="start-new-game"
@@ -67,6 +68,13 @@ export function StartScreen({ hasSave, onStart, onContinue, onClearSave }: Start
                 onClick={onContinue}
               >
                 {"\uC774\uC5B4\uD558\uAE30"}
+              </button>
+              <button
+                className="border border-cyanline/35 bg-cyanline/[0.07] px-4 py-4 font-bold text-cyan-100 transition hover:border-cyanline/70 hover:bg-cyanline/15 focus:outline-none focus:ring-2 focus:ring-cyan-300/40"
+                data-testid="open-image-archive"
+                onClick={onOpenArchive}
+              >
+                이미지 기록실
               </button>
               <button
                 className="border border-slate-600/60 bg-slate-950/45 px-4 py-4 font-bold text-slate-300 transition hover:border-rose-300/65 hover:bg-rose-950/20 hover:text-rose-100 focus:outline-none focus:ring-2 focus:ring-rose-300/35"

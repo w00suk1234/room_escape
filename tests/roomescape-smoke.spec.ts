@@ -50,8 +50,11 @@ test("home screen renders title visual without debug controls", async ({ page })
   await expect(page.getByAltText("Who Remembers Echo main visual")).toBeVisible();
   await expect(page.getByTestId("start-new-game")).toBeVisible();
   await expect(page.getByTestId("continue-game")).toBeDisabled();
+  await expect(page.getByTestId("open-image-archive")).toBeVisible();
   await expect(page.getByTestId("clear-save")).toBeVisible();
   await expect(page.getByTestId("debug-toggle")).toHaveCount(0);
+  await page.getByTestId("open-image-archive").click();
+  await expect(page.getByRole("heading", { name: "이미지 기록실" })).toBeVisible();
   await expectNoBrokenImages(page);
   expect(consoleErrors).toEqual([]);
 });
